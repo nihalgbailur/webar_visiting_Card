@@ -146,7 +146,11 @@ export default class ARManager {
             card.position.y += 0.05
 
             // Enable it to be seen if it was hidden
-            card.visible = true
+            if (!card.visible) {
+                card.visible = true
+                // Also show avatar!
+                this.world.placeAvatarOnCard()
+            }
         }
     }
 

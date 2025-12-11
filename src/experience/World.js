@@ -1,31 +1,25 @@
 import * as THREE from 'three'
 import Experience from './Experience.js'
 import Card from './Card.js'
+import Avatar from './Avatar.js'
 
 export default class World {
     constructor() {
         this.experience = new Experience()
         this.scene = this.experience.scene
+        this.card = new Card()
+        this.avatar = new Avatar()
+
+        // Link avatar to card position initially?
+        // Or let AR Manager handle parentage.
 
         // Setup
         this.setEnvironment()
-        this.setCard()
-    }
-
-    setCard() {
-        this.card = new Card()
     }
 
     prepareCardForAR() {
-        // Hide card initially until placed
-        if (this.card && this.card.group) {
-            this.card.group.visible = false
-
-            // Should properly reset rotation/position logic here too if needed
-            // But ARManager will overwrite position on placement
-            // We set scale to 1 (Card.js default is 3.5 units sized geometry)
-            // ARManager handles the scaling down to 0.05
-        }
+        this.card.group.visible = false // Hide until placed
+        // Avatar is hidden by default
     }
 
     resetCardFromAR() {
@@ -35,6 +29,15 @@ export default class World {
             this.card.group.position.set(0, 0, 0)
             this.card.group.rotation.set(0, 0, 0)
         }
+        if (this.avatar) this.avatar.hide()
+    }
+
+    placeAvatarOnCard() {
+        // Move Avatar to match Card position but float above it
+        // We can attach Avatar group to Card group for easier sync
+        this.card.group.add(this.avatar.group)
+        this.avatar.group.position.set(0, 1.5, 0) // Floating above center
+        this.avatar.show()
     }
 
     setEnvironment() {
@@ -59,5 +62,6 @@ export default class World {
 
     update() {
         // Update resources/animations if any
+        if (this.avatar) this.avatar.update()
     }
 }

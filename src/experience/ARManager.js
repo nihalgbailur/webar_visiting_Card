@@ -94,6 +94,28 @@ export default class ARManager {
     }
 
     onSelect() {
+        // 1. Raycast to check if we hit the card
+        if (this.world.card.mesh.visible) {
+            // We need a raycaster
+            const raycaster = new THREE.Raycaster()
+
+            // In WebXR 'select', the input source pose gives the ray.
+            // But simplification: Let's assume user is looking at it (Gaze) or tapping screen center
+            // Ideally we iterate inputs in 'select' event, but let's try a simple camera forward ray first.
+            const camera = this.experience.camera.instance
+
+            // Set ray from camera center
+            raycaster.setFromCamera({ x: 0, y: 0 }, camera)
+
+            const intersects = raycaster.intersectObject(this.world.card.mesh)
+
+            if (intersects.length > 0) {
+                // Hit the card! Flip it.
+                this.world.card.flip()
+                return // Don't place/move if we just wanted to flip
+            }
+        }
+
         if (this.reticle.visible) {
             // Place the card at the reticle
             const card = this.world.card.group

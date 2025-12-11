@@ -96,23 +96,37 @@ export default class ARManager {
     onSelect() {
         // 1. Raycast to check if we hit the card
         if (this.world.card.mesh.visible) {
-            // We need a raycaster
             const raycaster = new THREE.Raycaster()
-
-            // In WebXR 'select', the input source pose gives the ray.
-            // But simplification: Let's assume user is looking at it (Gaze) or tapping screen center
-            // Ideally we iterate inputs in 'select' event, but let's try a simple camera forward ray first.
             const camera = this.experience.camera.instance
-
-            // Set ray from camera center
             raycaster.setFromCamera({ x: 0, y: 0 }, camera)
 
             const intersects = raycaster.intersectObject(this.world.card.mesh)
 
             if (intersects.length > 0) {
-                // Hit the card! Flip it.
+                const hit = intersects[0]
+
+                // Check if we hit the Back Face (Material Index 5)
+                // Note: BoxGeometry materials: 0-1 (Sides), 2-3 (Top/Bot), 4 (Front), 5 (Back)
+                if (hit.face.materialIndex === 5) {
+                    // Check UV coordinates for Social Links Area (Bottom 25%)
+                    // UV (0,0) is usually bottom-left. Text is at height-60 (bottom).
+                    // So we look for low V values.
+                    if (hit.uv.y < 0.25) {
+                        // Left side (Twitter) vs Right side (LinkedIn)
+                        if (hit.uv.x < 0.5) {
+                            // Open Twitter
+                            window.open('https://x.com/BailurG', '_blank')
+                        } else {
+                            // Open LinkedIn
+                            window.open('https://www.linkedin.com/in/nihal-g-bailur/', '_blank')
+                        }
+                        return // Link opened, don't flip
+                    }
+                }
+
+                // If not a link click, Flip the card
                 this.world.card.flip()
-                return // Don't place/move if we just wanted to flip
+                return
             }
         }
 

@@ -77,6 +77,11 @@ export default class Card {
             if (this.userData.email) ctx.fillText(this.userData.email, width / 2, height / 2)
             if (this.userData.phone) ctx.fillText(this.userData.phone, width / 2, height / 2 + 40)
             if (this.userData.website) ctx.fillText(this.userData.website, width / 2, height / 2 + 80)
+
+            // Socials (Visible in AR)
+            ctx.font = 'bold 24px Inter'
+            ctx.fillStyle = '#333333'
+            ctx.fillText('X: @BailurG  |  in: /nihal-g-bailur', width / 2, height - 60)
         }
 
         const texture = new THREE.CanvasTexture(canvas)

@@ -2,6 +2,8 @@
 
 > A premium, interactive 3D business card experience that lives in the browser and steps into reality with WebXR.
 
+![WebAR Hero Banner](public/readme-banner.png)
+
 ![WebAR Card](https://img.shields.io/badge/Status-Production_Ready-gold?style=for-the-badge) ![Tech](https://img.shields.io/badge/Built_With-Three.js_|_WebXR_|_Vite-black?style=for-the-badge)
 
 ## 🌟 Features

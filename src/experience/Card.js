@@ -71,11 +71,12 @@ export default class Card {
             ctx.fillStyle = '#111111'
             ctx.font = 'bold 60px Playfair Display'
             ctx.textAlign = 'center'
-            ctx.fillText('Contact', width / 2, height / 2 - 50)
+            ctx.fillText('Contact', width / 2, height / 2 - 80)
 
             ctx.font = '30px Inter'
-            ctx.fillText(this.userData.email, width / 2, height / 2 + 20)
-            ctx.fillText(this.userData.phone, width / 2, height / 2 + 70)
+            if (this.userData.email) ctx.fillText(this.userData.email, width / 2, height / 2)
+            if (this.userData.phone) ctx.fillText(this.userData.phone, width / 2, height / 2 + 40)
+            if (this.userData.website) ctx.fillText(this.userData.website, width / 2, height / 2 + 80)
         }
 
         const texture = new THREE.CanvasTexture(canvas)

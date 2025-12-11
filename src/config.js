@@ -1,15 +1,15 @@
 export default {
     personal: {
-        name: 'Nihal Bailur',
-        role: 'Creative Developer',
-        email: 'hello@nihalbailur.com',
-        phone: '+1 (555) 123-4567',
+        name: 'Nihal G Bailur',
+        role: 'Gen AI Developer',
+        email: 'nihalgbailur@gmail.com',
+        phone: '+1 (555) 123-4567', // Placeholder or remove if not needed
         website: 'www.nihalbailur.com'
     },
     social: {
-        twitter: 'https://twitter.com',
-        linkedin: 'https://linkedin.com',
-        github: 'https://github.com'
+        twitter: 'https://x.com/BailurG',
+        linkedin: 'https://www.linkedin.com/in/nihal-g-bailur/',
+        github: 'https://github.com/nihalgbailur'
     },
     theme: {
         accent: '#D4AF37',

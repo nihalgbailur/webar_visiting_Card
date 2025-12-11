@@ -5,15 +5,19 @@ import gsap from 'gsap'
 
 import config from '../config.js'
 
+import AudioManager from './AudioManager.js'
+
 export default class Card {
     constructor() {
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.time = this.experience.time
+        this.audioManager = new AudioManager()
 
         this.userData = config.personal
-
         this.debug = this.experience.debug
+
+
 
         this.setGroup()
         this.setGeometry()
@@ -153,6 +157,12 @@ export default class Card {
     }
 
     flip() {
+        // Haptics (Vibration) - 10ms for subtle click
+        if (navigator.vibrate) navigator.vibrate(10)
+
+        // Sound
+        if (this.audioManager) this.audioManager.playFlipSound()
+
         // Toggle flip state
         this.isFlipped = !this.isFlipped
 
